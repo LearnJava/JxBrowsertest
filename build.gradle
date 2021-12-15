@@ -1,0 +1,83 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10-RC'
+    id 'java'
+    id 'com.diffplug.gradle.eclipse.mavencentral' version '3.18.0' apply false
+    id 'com.github.johnrengelman.shadow' version "7.1.0"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://europe-maven.pkg.dev/jxbrowser/releases' }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+dependencies {
+//    classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    // Cross-platform dependency
+    // -------------------------
+    implementation "com.teamdev.jxbrowser:jxbrowser-cross-platform:7.21"
+
+    /*
+	   For having only platform-dependent dependency:
+	   1. Comment out the cross-platform dependency above.
+	   2. Uncomment the dependency for your platform.
+	*/
+
+    // Windows 32-bit
+    // -------------------------
+    // implementation "com.teamdev.jxbrowser:jxbrowser-win32:7.21"
+
+    // Windows 64-bit
+    // -------------------------
+    implementation "com.teamdev.jxbrowser:jxbrowser-win64:7.21"
+
+    // macOS 64-bit
+    // -------------------------
+    // implementation "com.teamdev.jxbrowser:jxbrowser-mac:7.21"
+
+    // macOS 64-bit ARM
+    // -------------------------
+    // implementation "com.teamdev.jxbrowser:jxbrowser-mac-arm:7.21"
+
+    // Linux 64-bit
+    // -------------------------
+    // implementation "com.teamdev.jxbrowser:jxbrowser-linux64:7.21"
+
+    // Linux 64-bit ARM
+    // -------------------------
+    // implementation "com.teamdev.jxbrowser:jxbrowser-linux64-arm:7.21"
+
+    // JavaFX dependency
+    // -------------------------
+    implementation "com.teamdev.jxbrowser:jxbrowser-javafx:7.21"
+
+    // Swing dependency
+    // -------------------------
+    implementation "com.teamdev.jxbrowser:jxbrowser-swing:7.21"
+
+    // SWT dependency
+    // -------------------------
+    implementation "com.teamdev.jxbrowser:jxbrowser-swt:7.21"
+
+    // Depend on Guava for the Resources utility class used for loading resource files into strings.
+    implementation "com.google.guava:guava:29.0-jre"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'DeadLinks'
+    }
+}
